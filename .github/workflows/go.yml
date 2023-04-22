@@ -16,6 +16,7 @@ jobs:
       USER: root
       PASSWORD: root
       DBNAME: root
+
     strategy:
       matrix:
         go_version: ['1.18', '1.17', '>=1.18']
@@ -48,3 +49,10 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build
       run: go build -v main.go
+
+# step que irá chamar o docker.yml
+  docker:
+    needs: build
+    uses: ./.github/workflows/docker.yml
+    # herda as secrets do docker.yml
+    secrets: inherit
