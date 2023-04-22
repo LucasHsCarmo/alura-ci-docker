@@ -53,6 +53,6 @@ jobs:
 # step que irá chamar o docker.yml
   docker:
     needs: build
-    uses: ./.github/workflows/docker.yml
+    uses: "./.github/workflows/docker.yml"
     # herda as secrets do docker.yml
     secrets: inherit
