@@ -13,9 +13,23 @@ jobs:
 
     - name: Setup Docker Build
       uses: docker/setup-buildx-action@v2
+    
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.1.1
+      with:
+        name: api_go
 
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        # tipo da tag ${{ github.ref_name }}
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/app:latest
